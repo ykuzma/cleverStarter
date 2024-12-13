@@ -1,11 +1,13 @@
 plugins {
-    id 'java'
-
+    id 'java-library'
+    id 'maven-publish'
     id "org.springframework.boot" version '3.4.0'
 }
 
 group 'by.clevertec'
-version '1.0-SNAPSHOT'
+version '0.1.0'
+
+archivesBaseName = 'starter-monitor-performance'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -16,13 +18,36 @@ repositories {
     mavenCentral()
 }
 
+jar {
+    enabled = true
+    finalizedBy publishToMavenLocal
+    archivesBaseName = "starter-monitor-performance"
+
+    manifest{
+        attributes 'bundle-name': archivesBaseName
+        attributes 'bundle-version': version
+    }
+
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId "starter-monitor-performance"
+            from components.java
+        }
+    }
+
+}
+
 
 dependencies {
+    annotationProcessor platform('org.springframework.boot:spring-boot-dependencies:3.4.0')
+    annotationProcessor 'org.projectlombok:lombok'
 
+    implementation platform('org.springframework.boot:spring-boot-dependencies:3.4.0')
     compileOnly 'org.projectlombok:lombok'
 
-    annotationProcessor 'org.projectlombok:lombok'
-    implementation platform('org.springframework.boot:spring-boot-dependencies:3.4.0')
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-aop'
 
