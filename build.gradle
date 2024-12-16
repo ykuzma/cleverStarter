@@ -1,5 +1,5 @@
 plugins {
-    id 'java-library'
+    id 'java'
     id 'maven-publish'
     id "org.springframework.boot" version '3.4.0'
 }
@@ -20,14 +20,11 @@ repositories {
 
 jar {
     enabled = true
-    finalizedBy publishToMavenLocal
     archivesBaseName = "starter-monitor-performance"
-
     manifest{
         attributes 'bundle-name': archivesBaseName
         attributes 'bundle-version': version
     }
-
 }
 
 publishing {
@@ -37,7 +34,6 @@ publishing {
             from components.java
         }
     }
-
 }
 
 
